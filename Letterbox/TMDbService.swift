@@ -31,7 +31,6 @@ class TMDbService {
     }
 }
 
-// Response wrapper
 struct TMDbResponse: Codable {
     let results: [Movie]
 }
