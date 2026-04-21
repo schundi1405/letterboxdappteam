@@ -35,6 +35,7 @@ struct MovieDetailView: View {
                 let newReview = Review(
                     movieID: movie.id,
                     movieTitle: movie.displayTitle,
+                    posterPath: movie.poster_path,
                     text: text,
                     rating: rating,
                     date: Date()

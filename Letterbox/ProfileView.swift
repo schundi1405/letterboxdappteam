@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @Binding var page: ReviewsPage
+    @State private var isEditing = false
 
     
     var body: some View {
@@ -17,18 +18,56 @@ struct ProfileView: View {
             
             List {
                 ForEach(page.items) { review in
-                    VStack(alignment: .leading) {
-                        Text(review.movieTitle)
-                            .font(.headline)
+                    HStack(alignment: .top, spacing: 12) {
                         
-                        Text("⭐️ \(review.rating)/5")
+                        if let path = review.posterPath,
+                           let url = URL(string: "https://image.tmdb.org/t/p/w200\(path)") {
+                            
+                            AsyncImage(url: url) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 60, height: 90)
+                            .clipped()
+                            .cornerRadius(8)
+                        }
                         
-                        Text(review.text)
-                            .lineLimit(2)
+                        VStack(alignment: .leading) {
+                            Text(review.movieTitle)
+                                .font(.headline)
+                            
+                            Text("⭐️ \(review.rating)/5")
+                            
+                            Text(review.text)
+                                .lineLimit(2)
+                        }
                     }
                 }
             }
-            .navigationTitle("Profile")
+            .scrollContentBackground(.hidden)
+            .background(page.color.opacity(0.5)) // background color
+                        
+            .navigationTitle("Welcome, Sindhu!")
+            
+            
+            .toolbar {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button {
+                                    isEditing = true
+                                } label: {
+                                    Image(systemName: "gearshape.fill")
+                                        .foregroundStyle(page.color)
+                                        .font(.system(size: 22))
+                                }
+                            }
+                        }
+                        
+                        .sheet(isPresented: $isEditing) {
+                            EditSheet( selectedColor: $page.color)
+                        }
         }
     }
 }

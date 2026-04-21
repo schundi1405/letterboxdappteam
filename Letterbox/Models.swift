@@ -1,5 +1,5 @@
 //
-//  Movie.swift
+//  Models.swift
 //  Letterbox
 //
 //  Created by Sindhu's iPad on 4/20/26.
@@ -24,6 +24,7 @@ struct Review: Identifiable {
     var id = UUID()
     var movieID: Int
     var movieTitle: String
+    var posterPath: String? 
     var text: String
     var rating: Int
     var date: Date
