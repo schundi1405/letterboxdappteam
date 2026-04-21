@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 
 struct Movie: Identifiable, Codable {
@@ -29,4 +30,10 @@ struct Review: Identifiable {
     var rating: Int
     var date: Date
     var isCompleted: Bool = false
+}
+
+struct ReviewsPage {
+    var title: String
+    var items: [Review]
+    var color: Color
 }

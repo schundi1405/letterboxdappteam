@@ -14,34 +14,28 @@ struct SearchView: View {
     @State private var isLoading = false
     
     @Binding var page: ReviewsPage
+    @State private var isEditing = false
+
     
     let service = TMDbService()
     
     var body: some View {
         NavigationStack {
-            
             VStack {
-                
                 TextField("Search movies...", text: $searchText)
                     .textFieldStyle(.roundedBorder)
                     .padding()
-                
                 Button("Search") {
                     Task { await search() }
                 }
-                
                 if isLoading {
-                    ProgressView()
-                }
-                
+                    ProgressView()}
                 List(movies) { movie in
                     NavigationLink {
                         MovieDetailView(movie: movie, page: $page)
                     } label: {
                         
                         HStack(alignment: .top, spacing: 12) {
-                            
-                    
                             if let path = movie.poster_path,
                                let url = URL(string: "https://image.tmdb.org/t/p/w200\(path)") {
                                 
@@ -57,26 +51,38 @@ struct SearchView: View {
                                 .cornerRadius(8)
                                 .shadow(radius: 3)
                             }
-                            
-                        
                             VStack(alignment: .leading, spacing: 6) {
-                                
                                 Text(movie.displayTitle)
                                     .font(.headline)
-                                
                                 if let overview = movie.overview {
                                     Text(overview)
                                         .font(.subheadline)
                                         .foregroundColor(.gray)
-                                        .lineLimit(3)
-                                }
+                                        .lineLimit(3) }
                             }
                         }
                         .padding(.vertical, 6)
                     }
                 }
+                .scrollContentBackground(.hidden)
             }
+            .background(page.color.opacity(0.5))
             .navigationTitle("Search")
+            .toolbar {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button {
+                                    isEditing = true
+                                } label: {
+                                    Image(systemName: "gearshape.fill")
+                                        .foregroundStyle(page.color)
+                                        .font(.system(size: 22))
+                                }
+                            }
+                        }
+                        
+                        .sheet(isPresented: $isEditing) {
+                            EditSheet( selectedColor: $page.color)
+                        }
         }
     }
     

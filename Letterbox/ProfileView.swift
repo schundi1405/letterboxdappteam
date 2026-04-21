@@ -44,6 +44,8 @@ struct ProfileView: View {
                             Text(review.text)
                                 .lineLimit(2)
                         }
+                        .padding()
+                        
                     }
                 }
             }

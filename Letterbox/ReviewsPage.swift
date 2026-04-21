@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct ReviewsPage {
-    var title: String
-    var items: [Review]
-    var color: Color
-}
+//struct ReviewsPage {
+//    var title: String
+//    var items: [Review]
+//    var color: Color
+//}
