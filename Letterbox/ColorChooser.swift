@@ -10,7 +10,7 @@ import SwiftUI
 struct ColorChooser: View {
     @Binding var selectedColor: Color
     
-    var colors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple, .pink]
+    var colors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple, .pink, .mint, .teal, .cyan, .gray]
     let columns = [ GridItem(.adaptive(minimum: 50)) ]
     
     var body: some View {
